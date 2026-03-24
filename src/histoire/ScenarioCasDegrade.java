@@ -1,46 +1,49 @@
 package histoire;
 
+import villagegaulois.Village;
+
+import personnages.Chef;
+import personnages.Druide;
 import personnages.Gaulois;
 import villagegaulois.Etal;
 
 public class ScenarioCasDegrade {
-    public static void main(String[] args) {
-        Etal etal = new Etal();
+	public static void main(String[] args) {}
+	Village village = new Village("le village des irréductibles", 10, 5);
+	Chef abraracourcix = new Chef("Abraracourcix", 10, village);
+	village.set(abraracourcix);
+	Druide druide = new Druide("Panoramix", 2, 5, 10);
+	Gaulois obelix = new Gaulois("Obélix", 25);
+	Gaulois asterix = new Gaulois("Astérix", 8);
+	Gaulois assurancetourix = new Gaulois("Assurancetourix", 2);
+	Gaulois bonemine = new Gaulois("Bonemine", 7);
+	
+	village.ajouterHabitant(bonemine);
+	village.ajouterHabitant(assurancetourix);
+	village.ajouterHabitant(asterix);
+	village.ajouterHabitant(obelix);
+	village.ajouterHabitant(druide);
+	village.ajouterHabitant(abraracourcix);
+	System.out.println( village.afficherVillageois());
 
-        // 1. libererEtal
-        try {
-            etal.libererEtal();
-        } catch (IllegalStateException e) {
-            System.err.println("ERREUR libererEtal : " + e.getMessage());
-            e.printStackTrace();
-        }
+	System.out.println(village.rechercherVendeursProduit("fleurs"));
+	System.out.println(village.installerVendeur(bonemine, "fleurs", 20));
+	System.out.println(village.rechercherVendeursProduit("fleurs"));
+	System.out.println(village.installerVendeur(assurancetourix, "lyres", 5));
+	System.out.println(village.installerVendeur(obelix, "menhirs", 2));
+	System.out.println(village.installerVendeur(druide, "fleurs", 10));
 
-        // 2a. acheteur null
-        try {
-            String resultat = etal.acheterProduit(5, null);
-            System.out.println("Résultat achat null : '" + resultat + "'");
-        } catch (Exception e) {
-            System.err.println("ERREUR inattendue : " + e.getMessage());
-        }
+	System.out.println(village.rechercherVendeursProduit("fleurs"));
+	Etal etalFleur = village.rechercherEtal(bonemine);
+	System.out.println(etalFleur.acheterProduit(10, abraracourcix));
+	System.out.println(etalFleur.acheterProduit(15, obelix));
+	System.out.println(etalFleur.acheterProduit(15, assurancetourix));
+	System.out.println(village.partirVendeur(bonemine));
+	System.out.println(village.afficherMarche());
 
-        // 2b. quantité <= 0
-        try {
-            String resultat = etal.acheterProduit(0, new Gaulois("Testeur", 5));
-            System.out.println("Résultat quantité 0 : " + resultat);
-        } catch (IllegalArgumentException e) {
-            System.err.println("ERREUR quantité : " + e.getMessage());
-            e.printStackTrace();
-        }
-
-        // === NOUVEAU TEST 2c : étal vide ===
-        try {
-            String resultat = etal.acheterProduit(10, new Gaulois("Abraracourcix", 5));
-            System.out.println("Résultat étal vide : " + resultat);
-        } catch (IllegalStateException e) {
-            System.err.println("ERREUR étal vide : " + e.getMessage());
-            e.printStackTrace();
-        }
-
-        System.out.println("Fin du test");
-    }
+	try {
+	    etal.acheterProduit(-5, client);
+	} catch (IllegalArgumentException e) {
+	    System.err.println(e.getMessage());
+	}
 }

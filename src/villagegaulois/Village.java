@@ -23,14 +23,14 @@ public class Village {
 	public void setChef(Chef chef) {
 		this.chef = chef;
 	}
-	public static class Marche{
+	private static class Marche{
 	
 		private Etal[] etals; 
 		public Marche(int nbretal)
 		{
 			etals=new Etal [nbretal];
 			for (int i = 0; i < nbretal; i++) {
-	                etals[i] = new Etal(); // Créer un étal vide pour chaque case
+	                etals[i] = new Etal(); 
 }
 			
 		}
